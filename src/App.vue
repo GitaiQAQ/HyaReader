@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import HyaReader from './components/HyaReader';
+import HyaReader from './components/Reader';
 
 export default {
   name: 'app',

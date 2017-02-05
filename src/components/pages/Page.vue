@@ -31,6 +31,7 @@ export default {
       return this.page[0].title;
     },
     compiledMarkdown() {
+      if (!this.page) return undefined;
       return this.page.map(v => v.text).join('\n');
     },
   },
@@ -38,7 +39,14 @@ export default {
 </script>
 
 <style lang="stylus">
+.slide-left-enter, .slide-right-leave-active
+  opacity 0
+  transform translate(100%, 0)
+.slide-left-leave-active, .slide-right-enter
+  opacity 0
+  transform translate(-100%, 0)
 .page
+  transition all .5s cubic-bezier(.55,0,.1,1)
   max-width: 34em;
   float: left;
   overflow: hidden;

@@ -110,13 +110,16 @@ export default {
         }
       });
 
-      this.$emit('updatePages', this.meta, this.toc, this.pages);
+      this.$emit('updatePages', this.toc, this.pages);
     },
   },
   created() {
-    this.$http.get('/static/Brave-New-World.txt').then(response => response.text()).then((text) => {
+    // https://raw.githubusercontent.com/GitaiQAQ/HyaReader/master/static/Brave-New-World.txt
+    // ./static/test_299.txt
+    this.$http.get('https://raw.githubusercontent.com/GitaiQAQ/HyaReader/master/static/Brave-New-World.txt').then(response => response.text()).then((text) => {
       const data = frontMatter(text);
       this.meta = data.attributes;
+      this.$emit('updateMeta', this.meta);
       const mdTree = markdown.parse(data.body);
       const htmlTree = markdown.toHTMLTree(mdTree);
       const result = markdown.renderJsonML(JSON.parse(JSON.stringify(htmlTree)));
