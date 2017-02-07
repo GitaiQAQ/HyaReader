@@ -7,8 +7,6 @@
         a(title="Font Size") {{ $parent.fontSize }}
       li
         a(title="Line Height") {{ $parent.lineHeight }}
-      li
-        a(title="Page") {{ $parent.pages.length }}
 </template>
 
 <script>

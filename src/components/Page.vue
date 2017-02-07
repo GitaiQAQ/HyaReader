@@ -1,43 +1,21 @@
 <template lang="jade">
   .page(:style="{ height: $parent.pageHeight + 'em', width: $parent.contentWidth + 'em'}")
     .hd(:style="{ width: $parent.contentWidth + 'rem'}")
-      h3 {{ title }}
+      slot(name="hd")
     .bd(:style="{ height: $parent.contentHeight + 'em'}")
-      .content(:id="'page_' + index", v-html="compiledMarkdown", :style="{ marginTop: offsetTop + 'em'}")
-    .ft(:style="{width: '3rem', 'margin-top': $parent.contentHeight * -0.3 + 'rem'}") {{ index }}
-      span / {{ total }} 
+      slot(name="bd")
+    .ft
+      slot(name="ft")
 </template>
-
 <script>
 export default {
-  name: 'page',
-  props: ['page', 'currPos', 'index', 'total'],
-  data() {
-    return {
-      stamp: {},
-      tocItem: [],
-      empty: true,
-    };
-  },
-  computed: {
-    offsetTop() {
-      if (!this.page) return undefined;
-      if (!this.page[0]) return undefined;
-      return this.page[0].offset;
-    },
-    title() {
-      if (!this.page) return undefined;
-      if (!this.page[0]) return undefined;
-      return this.page[0].title;
-    },
-    compiledMarkdown() {
-      if (!this.page) return undefined;
-      return this.page.map(v => v.text).join('\n');
+  methods: {
+    updateMeta(meta) {
+      this.meta = meta;
     },
   },
 };
 </script>
-
 <style lang="stylus">
 .slide-left-enter, .slide-right-leave-active
   opacity 0
@@ -62,22 +40,7 @@ export default {
       margin: 3em 0;
     h2
       padding-top: 3em;
-      padding-bottom: 1em;    
-  .hd
-    position: absolute;
-    top: 2em;
-    padding-bottom: 8px;
-    color: #aaa;
-    overflow: hidden;
-    border-bottom: 1px solid #e9eadf;
-    @media screen and (max-width:599px)
-      top: .7em;
-      height: 1rem;
-    h3
-      color: #855b5b;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      padding-bottom: 1em;
   .bd
     overflow: hidden;
     .content
@@ -91,7 +54,6 @@ export default {
       h2
         font-size: 1.25em;
         font-weight: bold;
-        margin-top: .3125em;
       hr
         margin: 11px 0;
       p,pre
@@ -113,7 +75,27 @@ export default {
         font-style: inherit;
         img
           margin-left: -2em;
-          width: 100%;
+          width: 100%;    
+  .hd, .ft
+    display: none;
+.page-reader
+  .hd, .ft
+    display: initial;
+  .hd
+    position: absolute;
+    top: 2em;
+    padding-bottom: 8px;
+    color: #aaa;
+    overflow: hidden;
+    border-bottom: 1px solid #e9eadf;
+    @media screen and (max-width:599px)
+      top: .7em;
+      height: 1rem;
+    h3
+      color: #855b5b;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
   .ft
     position: absolute;
     color: #999;
@@ -122,11 +104,10 @@ export default {
     @media screen and (max-width:599px)
       text-align: center;
       bottom: 1.2em;
-
 .layout-vertical
   .article
     height: auto !important;
-  .page
+  .page-reader
     float: none;
     height: auto !important;
     padding-top: 0;

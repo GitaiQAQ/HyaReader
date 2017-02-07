@@ -3,24 +3,33 @@
     hya-aside
     .article(@click="click($event)", :style="{ height: fullHeight+'em'}")
       .inner(:style="innerStyle")
-        page-loading(v-show="!pages.length")
-        page-render(v-if="!pages.length", @updatePages="updatePages")
-        page(v-if="vertical", v-for="(page, key) in slicedPage", 
-          :page="page", :key="sliced[0] + key", :index="sliced[0] + key + 1", :total="pages.length")
-        transition(v-if="!vertical", :name="transition")
-          page(v-if="pages.length", :page="pages[currPos]", :key="currPos", :index="currPos + 1", 
-            :total="pages.length")
+        page.page-render(v-if="$store.getters.isLoading")
+          PageRender(slot="bd", :contentHeight="contentHeight", :fontSize="fontSize", :lineHeight="lineHeight")
+        page.page-wrapper(v-if="!$store.getters.isLoading && vertical", :key="0")
+            PageWrapper(slot="bd")
+        page.page-reader(v-if="!$store.getters.isLoading && vertical", v-for="(page, key) in slicedPage", :key="sliced[0] + key")
+          PageReader(slot="bd", :index="sliced[0] + key")
+        transition(v-if="!$store.getters.isLoading && !vertical", :name="transition")
+          page.page-wrapper(v-if="!currPos", :key="0")
+            PageWrapper(slot="bd")
+          page.page-reader(v-if="currPos", :key="currPos")
+            h3(slot="hd") {{ title }}
+            PageReader(slot="bd", :index="currPos - 1")
+            span(slot="ft") {{ currPos }}
+              span / {{ pages.length }} 
 </template>
 
 <script>
 import HyaAside from './Aside';
-import Page from './pages/Page';
-import PageWrapper from './pages/PageWrapper';
-import PageRender from './pages/PageRender';
-import PageLoading from './pages/PageLoading';
+import Page from './Page';
+import PageLoading from './pages/Loading';
+import PageWrapper from './pages/Wrapper';
+import PageRender from './pages/Render';
+import PageReader from './pages/Reader';
 
 export default {
   name: 'hya-reader',
+  props: ['book'],
   data() {
     return {
       fontSize: 16,     // px
@@ -29,13 +38,17 @@ export default {
 
       transition: 'slide-left',
 
-      meta: [],
       currPos: 0,
-      toc: [],
-      pages: [],
     };
   },
   computed: {
+    pages() {
+      return this.$store.state.book.pages;
+    },
+    title() {
+      const chapter = this.$store.state.book.toc.find(item => item.pagination < this.currPos);
+      return chapter ? chapter.title : this.$store.getters.title;
+    },
     fullHeight() {
       return global.document.documentElement.clientHeight / this.fontSize;
     },
@@ -72,11 +85,11 @@ export default {
     innerStyle() {
       if (!this.vertical) {
         return {
-          width: `${this.pageWidth * (this.pages.length + 1)}em`,
+          width: `${this.pageWidth}em`,
         };
       }
       return {
-        width: `${this.pageWidth * (this.pages.length + 1)}em`,
+        width: `${this.pageWidth}em`,
         paddingTop: `${this.contentHeight * this.sliced[0]}em`,
         paddingBottom: `${this.contentHeight * ((this.pages.length - 1) - (this.sliced[0] + this.sliced[2]))}em`,
       };
@@ -85,18 +98,12 @@ export default {
   components: {
     Page,
     HyaAside,
-    PageRender,
     PageLoading,
     PageWrapper,
+    PageRender,
+    PageReader,
   },
   methods: {
-    updateMeta(meta) {
-      this.meta = meta;
-    },
-    updatePages(toc, pages) {
-      this.pages = pages;
-      this.toc = toc;
-    },
     layoutChange(layout) {
       this.currPos = 0;
       if (!layout) this.vertical = !this.vertical;
@@ -148,4 +155,6 @@ ol, ul
 .layout-vertical
   .inner
     position: relative;
+
+
 </style>

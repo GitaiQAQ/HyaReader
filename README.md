@@ -1,6 +1,20 @@
 # hyacinth
 
-> A stand-alone reader using BitTorrent.
+> A mobile-friendly reader powered by Vue 2.
+
+![](http://wx1.sinaimg.cn/mw690/690c6f7cgy1fci57vzkmkg20dc07iu0y.gif)
+
+## TODO
+
+- [x] Pager
+- [x] Responsive
+- [x] Layout Mode
+- [x] Markdown
+- [ ] Table of Content
+- [ ] Style
+- [ ] HTML5 History Mode
+- [ ] Progressive Web Apps
+- [ ] 漢字標準格式
 
 ## Build Setup
 
@@ -23,5 +37,3 @@ npm run e2e
 # run all tests
 npm test
 ```
-
-For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
