@@ -12,7 +12,7 @@ export default new Vuex.Store({
       vertical: false,
     },
     book: {
-      url: './static/楚辞.txt',
+      url: 'https://raw.githubusercontent.com/GitaiQAQ/HyaReader/gh-pages/static/楚辞.txt',
       tree: [],
       meta: [],
       toc: [],
