@@ -1,5 +1,7 @@
 <template lang="jade">
-  hya-reader
+  div
+    hya-reader
+    a#forkme_banner(href="https://github.com/GitaiQAQ/HyaReader") View on GitHub
 </template>
 
 <script>
@@ -34,3 +36,20 @@ export default {
   },
 };
 </script>
+<style>
+#forkme_banner {
+    display: block;
+    text-decoration: none;
+    position: absolute;
+    top: 0;
+    right: 10px;
+    z-index: 10;
+    padding: 10px 50px 10px 10px;
+    color: #fff;
+    background: url(//pages-themes.github.io/slate/assets/images/blacktocat.png) #0090ff no-repeat 95% 50%;
+    font-weight: 700;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    border-bottom-left-radius: 2px;
+    border-bottom-right-radius: 2px;
+}
+</style>
