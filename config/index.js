@@ -16,6 +16,10 @@ module.exports = {
     productionGzip: false,
     productionGzipExtensions: ['js', 'css']
   },
+  deploy: {
+    repo: 'https://github.com/GitaiQAQ/HyaReader.git',
+    branch: 'gh-pages'
+  },
   dev: {
     env: require('./dev.env'),
     port: 8080,
