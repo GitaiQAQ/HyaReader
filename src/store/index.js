@@ -46,6 +46,7 @@ export default new Vuex.Store({
     },
   },
   getters: {
+    isWrapper: state => !state.book.meta.length,
     isLoading: state => !state.book.pages.length,
     title: state => state.book.meta.title,
   },

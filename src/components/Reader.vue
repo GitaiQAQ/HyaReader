@@ -3,6 +3,11 @@
     hya-aside
     .article(@click="click($event)", :style="{ height: fullHeight+'em'}")
       .inner(:style="innerStyle")
+        page.page-wrapper(v-if="$store.getters.isLoading")
+          PageWrapper(slot="bd", v-show="$store.state.book.meta.title")
+          .page-loading(slot="bd")
+            Spinner(:show="!$store.state.book.meta.title",
+            :style="{ height: $parent.pageHeight + 'em', width: $parent.contentWidth + 'em'}")
         page.page-render(v-if="$store.getters.isLoading")
           PageRender(slot="bd", :contentHeight="contentHeight", :fontSize="fontSize", :lineHeight="lineHeight")
         page.page-wrapper(v-if="!$store.getters.isLoading && vertical", :key="0")
@@ -22,7 +27,7 @@
 <script>
 import HyaAside from './Aside';
 import Page from './Page';
-import PageLoading from './pages/Loading';
+import Spinner from './utils/Spinner';
 import PageWrapper from './pages/Wrapper';
 import PageRender from './pages/Render';
 import PageReader from './pages/Reader';
@@ -98,7 +103,7 @@ export default {
   components: {
     Page,
     HyaAside,
-    PageLoading,
+    Spinner,
     PageWrapper,
     PageRender,
     PageReader,

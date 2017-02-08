@@ -36,8 +36,11 @@ export default {
   },
 };
 </script>
-<style>
-#forkme_banner {
+<style lang="stylus">
+.page
+  &:hover
+    d
+#forkme_banner
     display: block;
     text-decoration: none;
     position: absolute;
@@ -51,5 +54,4 @@ export default {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     border-bottom-left-radius: 2px;
     border-bottom-right-radius: 2px;
-}
 </style>

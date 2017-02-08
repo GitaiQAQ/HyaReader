@@ -1,5 +1,8 @@
 <template lang="jade">
   .page(:style="{ height: $parent.pageHeight + 'em', width: $parent.contentWidth + 'em'}")
+    // .tip
+      a(class="prevBtn")
+      a(class="nextBtn")
     .hd(:style="{ width: $parent.contentWidth + 'rem'}")
       slot(name="hd")
     .bd(:style="{ height: $parent.contentHeight + 'em'}")
@@ -78,6 +81,30 @@ export default {
           width: 100%;    
   .hd, .ft
     display: none;
+  &:hover
+    .tip
+      display: block;
+  .tip
+    display: none;
+    a
+      display: block;
+      line-height: 40px;
+      position: absolute;
+      top: 50%;
+      margin-top: -20px;
+      width: 40px;
+      height: 40px;
+      background-color: #000;
+      opacity: 0.3;
+      // filter: alpha(opacity=30)color: rgb(255, 255, 255);
+      overflow: hidden;
+      z-index: 4;
+    .prevBtn
+      left: 5px;
+    .nextBtn
+      right: 5px;
+.page-loading
+    text-align: center;
 .page-reader
   .hd, .ft
     display: initial;
