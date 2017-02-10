@@ -105,6 +105,9 @@ export default {
       right: 5px;
 .page-loading
     text-align: center;
+.toc
+  .hd
+    display: initial;
 .page-reader
   .hd, .ft
     display: initial;

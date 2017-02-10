@@ -1,6 +1,6 @@
 {
   "name": "hyacinth",
-  "version": "1.3.2",
+  "version": "2.0.0",
   "description": "A mobile-friendly reader powered by Vue 2.",
   "author": "Gitai <i@gitai.me>",
   "private": true,

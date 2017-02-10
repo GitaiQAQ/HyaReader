@@ -4,6 +4,8 @@
       li
         a(href="#", @click="$parent.layoutChange()", class="arkicon-layout", :class="{ 'vertical': $parent.vertical }", title="Layout")
       li
+        a(href="#", @click="$parent.showTOC()", class="arkicon-list", title="TOC")
+      li
         a(title="Font Size") {{ $parent.fontSize }}
       li
         a(title="Line Height") {{ $parent.lineHeight }}

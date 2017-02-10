@@ -3,6 +3,9 @@
     hya-aside
     .article(@click="click($event)", :style="{ height: fullHeight+'em'}")
       .inner(:style="innerStyle")
+        page.toc(v-if="toc_show")
+          h2(slot="hd") 目录
+          hya-toc(slot="bd")
         page.page-wrapper(v-if="$store.getters.isLoading")
           PageWrapper(slot="bd", v-show="$store.state.book.meta.title")
           .page-loading(slot="bd")
@@ -26,6 +29,7 @@
 
 <script>
 import HyaAside from './Aside';
+import HyaToc from './TOC';
 import Page from './Page';
 import Spinner from './utils/Spinner';
 import PageWrapper from './pages/Wrapper';
@@ -40,6 +44,7 @@ export default {
       fontSize: 16,     // px
       lineHeight: 1.5,  // em
       vertical: false,
+      toc_show: false,
 
       transition: 'slide-left',
 
@@ -103,6 +108,7 @@ export default {
   components: {
     Page,
     HyaAside,
+    HyaToc,
     Spinner,
     PageWrapper,
     PageRender,
@@ -114,6 +120,9 @@ export default {
       if (!layout) this.vertical = !this.vertical;
       else if (layout === 'layout-vertical') this.vertical = true;
       else if (layout === 'layout-horizontal') this.vertical = false;
+    },
+    showTOC() {
+      this.toc_show = !this.toc_show;
     },
     turn(num) {
       this.transition = (num > 0) ? 'slide-left' : 'slide-right';
@@ -160,6 +169,4 @@ ol, ul
 .layout-vertical
   .inner
     position: relative;
-
-
 </style>

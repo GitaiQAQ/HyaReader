@@ -32,10 +32,10 @@ export default {
         const tag = elTree.shift();
         if (tag === 'img') return 2;// numOfImg += 1;
         else if (tag === 'h1') {
-          $this.toc.push({
+          $this.$store.dispatch('UPDATE_BOOK_TOC', { toc: {
             pagination,
             title: elTree.shift(),
-          });
+          } });
           return 1;
         }
         if (elTree.length && typeof elTree[0] === 'object' && !(elTree[0] instanceof Array)) elTree.shift();
@@ -50,6 +50,7 @@ export default {
 
       function nextPage(height) {
         pageHeight = height;
+        $this.$store.dispatch('UPDATE_BOOK_PAGE', { page: $this.pages[pagination] });
         pagination += 1;
         if (!$this.pages[pagination]) $this.pages[pagination] = [];
       }
@@ -90,8 +91,8 @@ export default {
           $this.pages[pagination].push(oParagraph);
         }
       });
-      this.$store.commit('UPDATE_BOOK_TOC', { toc: this.toc.reverse() });
-      this.$store.commit('UPDATE_BOOK_PAGES', { pages: this.pages });
+      // this.$store.dispatch('UPDATE_BOOK_TOC', { toc: this.toc.reverse() });
+      // this.$store.dispatch('UPDATE_BOOK_PAGES', { pages: this.pages });
     },
   },
   updated() {

@@ -39,15 +39,36 @@ export default new Vuex.Store({
       if (html) state.book.html = html;
     },
     UPDATE_BOOK_TOC: (state, { toc }) => {
-      if (toc) state.book.toc = toc;
+      if (toc) state.book.toc.push(toc);
     },
-    UPDATE_BOOK_PAGES: (state, { pages }) => {
-      if (pages) state.book.pages = pages;
+    UPDATE_BOOK_PAGE: (state, { page }) => {
+      if (page) state.book.pages.push(page);
     },
   },
   getters: {
     isWrapper: state => !state.book.meta.length,
     isLoading: state => !state.book.pages.length,
     title: state => state.book.meta.title,
+    toc: state => state.book.toc,
+  },
+  actions: {
+    UPDATE_BOOK_META({ commit }, meta) {
+      commit('UPDATE_BOOK_META', meta);
+    },
+    UPDATE_BOOK_HTML({ commit }, html) {
+      commit('UPDATE_BOOK_HTML', html);
+    },
+    UPDATE_BOOK_TREE({ commit }, tree) {
+      commit('UPDATE_BOOK_TREE', tree);
+    },
+    UPDATE_BOOK_URL({ commit }, url) {
+      commit('UPDATE_BOOK_URL', url);
+    },
+    UPDATE_BOOK_TOC({ commit }, toc) {
+      commit('UPDATE_BOOK_TOC', toc);
+    },
+    UPDATE_BOOK_PAGE({ commit }, page) {
+      commit('UPDATE_BOOK_PAGE', page);
+    },
   },
 });
